@@ -48,7 +48,7 @@ Zeit time
 Zweimal twice
 acht eight
 allem all
-anderer else
+anderer other 
 auch also
 auf on
 beginnt begins
@@ -57,12 +57,12 @@ das the
 dem the
 den the
 der the
-des of
+des of the
 die the
 dritte third
 ein a
 eine a
-einen one
+einen a
 endet ends
 es it
 für for
