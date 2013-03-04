@@ -40,68 +40,68 @@ Schüler pupil
 Schülerinnen female pupils
 Sie you
 Teil part
-Universitätsstudium
-Vor
-Wege
-Woche
-Zeit
-Zweimal
-acht
-allem
-anderer
-auch
-auf
-beginnt
-dann
-das
-dem
-den
-der
-des
-die
-dritte
-ein
-eine
-einen
-endet
-es
-für
-gehen
-geht
-gemeinsam
-gibt
-in
-ist
-kann
-kurzem
-künftigen
-lang
-lernen
-machen
-man
-meisten
-mit
-müssen
-nach
-neun
-neunten
-nicht
-oder
-praktische
-praktischen
-reduziert
-sechs
-sich
-sie
-studieren
-suchen
-trennen
-umfasst
-und
-vier
-von
-vor
-vorbereitet
-worden
-zehnten
-zuerst
+Universitätsstudium university studies
+Vor before
+Wege ways
+Woche week
+Zeit time
+Zweimal twice
+acht eight
+allem all
+anderer else
+auch also
+auf on
+beginnt begins
+dann then
+das the
+dem the
+den the
+der the
+des of
+die the
+dritte third
+ein a
+eine a
+einen one
+endet ends
+es it
+für for
+gehen go
+geht goes
+gemeinsam together
+gibt are
+in in
+ist is
+kann can
+kurzem recently
+künftigen future
+lang long
+lernen learn
+machen make
+man you
+meisten most
+mit with
+müssen must
+nach after
+neun nine
+neunten ninth
+nicht not
+oder or
+praktische practical
+praktischen practical
+reduziert reduced
+sechs six
+sich itself
+sie they
+studieren study
+suchen search
+trennen separate
+umfasst includes
+und and
+vier four
+von of
+vor before
+vorbereitet prepared
+worden been
+zehnten tenth
+zuerst first
