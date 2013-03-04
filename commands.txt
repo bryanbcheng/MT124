@@ -1,0 +1,1 @@
+tr -s ' .,()"' '\n' < text.txt | sort | uniq > EGdict.txt
