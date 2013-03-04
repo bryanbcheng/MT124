@@ -6,10 +6,10 @@ def readFile(filename):
 	f.close()
 	for line in lines:
 		if line == "\n":
-			print "**line deleted**"
+			# print "**line deleted**"
 			del line
-		else:
-			print line
+		# else:
+		# 	print line
 	return lines
 
 def readDict(filename):
@@ -20,7 +20,7 @@ def readDict(filename):
 	for line in lines:
 		germanWord = line[:line.index(' ')].strip()
 		engDef = line[(line.index(' ') + 1):].strip()
-		print "the german word is %s with the english def %s" %(germanWord, engDef)
+		# print "the german word is %s with the english def %s" %(germanWord, engDef)
 		dictionary[germanWord] = engDef
 	return dictionary
 
@@ -28,15 +28,26 @@ def readDict(filename):
 lines = readFile('text.txt')
 dictionary = readDict('EGdict.txt')
 
-print lines
-print dictionary
+# print lines
+# print dictionary
 translatedWords = []
 for line in lines:
 	line = line.strip()
 	wordVector = line.split()
+	newSentence = ""
+	wordsFromVecSeen = 0
+	totalNumWords = len(wordVector)
 	for word in wordVector:
 		word = word.strip(".,\"()")
-		print "the word %s translates to %s" %(word, dictionary[word])
+		# print "the word %s translates to %s" %(word, dictionary[word])
+		wordsFromVecSeen += 1
+		newSentence += dictionary[word]
+		if wordsFromVecSeen == totalNumWords:
+			newSentence += "\n"
+		else:
+			newSentence += " "
 		translatedWords.append(dictionary[word])
+		# print "%s" %(word)
+	print newSentence
 
-print translatedWords
+# print translatedWords
