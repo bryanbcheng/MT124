@@ -17,10 +17,17 @@ def readFile(filename):
 # Get starting index and ending index of noun phrase assuming only 1 noun in noun phrase
 def findNounPhrase(sentence, index):
 	subEnd = None
+	numPreps = 0
+	numNouns = 0
 	for i in range(subPos + 1, len(sentence)):
+		if posDict[sentence[i]] == "IN":
+			numPreps += 1
+
 		if posDict[sentence[i]] in nouns:
-			subEnd = i
-			break
+			numNouns += 1
+			if numNouns > numPreps:
+				subEnd = i
+				break
 
 	subStart = subEnd
 	while subStart > subPos:
@@ -29,7 +36,6 @@ def findNounPhrase(sentence, index):
 			subStart -= 1
 		else:
 			break
-
 	return (subStart, subEnd)
 
 sentences = readFile('translated.txt')
@@ -58,8 +64,9 @@ transform = []
 
 # Define reordering rules
 for sentence in sentences:
-	# Rule 1 - first sentence
+
 	sentence = sentence.strip().split(' ')
+	# Rule 1 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front
 	if posDict[sentence[0]] == "IN": #preposition
 		#Find subject of prepositional phrase
 		subPos = None
@@ -76,7 +83,7 @@ for sentence in sentences:
 				subPos += 1
 				sentence.insert(subPos, sentence.pop(i))
 	
-	#Rule 2 - swap verb and pronoun after it
+	# Rule 2 - swap verb and pronoun after it
 	for i in range(len(sentence) - 1):
 		if posDict[sentence[i]] in verbs and posDict[sentence[i + 1]] == "PRP":
 			sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
@@ -106,6 +113,8 @@ for sentence in sentences:
 			sentence.insert(i + 2, sentence.pop(-2))
 
 	#Rule 6 - make sure subject and verb agree
+	# for i in range(len(sentence) - 1):
+	# 	if sentence[i] == 
 	
 	#Rule 7 - swap consec VBN
 
@@ -133,4 +142,7 @@ for sentence in sentences:
 	transform.append(joined)
 
 # Display final output
-print transform
+i = 0
+for line in transform:
+	i += 1
+	print "(%d) %s" %(i, line)
