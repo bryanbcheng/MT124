@@ -41,7 +41,12 @@ for line in tagged:
 	words = string.split(line.strip(), ' ')
 	for word in words:
 		tags = string.split(word, '_')
-		posDict[tags[0]] = tags[1]
+		if tags[0] == '-LRB-':
+			posDict['('] = '('
+		elif tags[0] == '-RRB-':
+			posDict[')'] = ')'
+		else:
+			posDict[tags[0]] = tags[1]
 
 nouns = set(['NN','NNP','NNPS','NNS','PRP'])
 verbs = set(['VB','VBD','VBG','VBN','VBP','VBZ'])
@@ -70,8 +75,6 @@ for sentence in sentences:
 			for i in range(subStart, subEnd + 1):
 				subPos += 1
 				sentence.insert(subPos, sentence.pop(i))
-
-	print sentence
 	
 	#Rule 2 - swap verb and pronoun after it
 	for i in range(len(sentence) - 1):
@@ -86,18 +89,27 @@ for sentence in sentences:
 			break
 			
 	#Rule 4 - move verb at end of sentence after modal
-	if posDict[sentence[-1]] in verbs:
+	if posDict[sentence[-2]] in verbs:
 		for i in range(len(sentence)):
 			if posDict[sentence[i]] == 'MD':
 				ind = i + 1
 				while posDict[sentence[ind]] in adverbs:
 					ind += 1
-				sentence.insert(ind, sentence.pop())
+				sentence.insert(ind, sentence.pop(-2))
 				
 
-	#Rule - move verb at end of sentence after modal
+	#Rule 5 - change the after comma to which, move verb at end after comma
+	for i in range(len(sentence) - 1):
+		if sentence[i] == ',' and sentence[i + 1] == 'the':
+			sentence[i + 1] = 'which'
+			
+			sentence.insert(i + 2, sentence.pop(-2))
 
-	#Rule 7 - swap VBN
+	#Rule 6 - make sure subject and verb agree
+	
+	#Rule 7 - swap consec VBN
+
+	#Rule 8 - replace 'are it' -> 'there exists'
 
 	#Rule 10
 	for i in range(len(sentence) - 1):
@@ -108,8 +120,16 @@ for sentence in sentences:
 
 	# Post processing, capitalize first letter, add period at end.
 	sentence[0] = sentence[0].capitalize()
+	if sentence[0] == '(':
+		sentence[1] = sentence[1].capitalize()
 	joined = ' '.join(sentence)
-	joined += '.'
+	
+	# remove space before periods, commas and ()
+	joined = string.replace(joined, ' ,', ',')
+	joined = string.replace(joined, ' .', '.')
+	joined = string.replace(joined, '( ', '(')
+	joined = string.replace(joined, ' )', ')')
+
 	transform.append(joined)
 
 # Display final output
