@@ -66,7 +66,7 @@ transform = []
 for sentence in sentences:
 
 	sentence = sentence.strip().split(' ')
-	# Rule 1 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front
+	# Rule 1 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front of the verb
 	if posDict[sentence[0]] == "IN": #preposition
 		#Find subject of prepositional phrase
 		subPos = None
