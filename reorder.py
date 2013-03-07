@@ -14,6 +14,23 @@ def readFile(filename):
 			i += 1
         return lines
 
+# Get starting index and ending index of noun phrase assuming only 1 noun in noun phrase
+def findNounPhrase(sentence, index):
+	subEnd = None
+	for i in range(subPos + 1, len(sentence)):
+		if posDict[sentence[i]] in nouns:
+			subEnd = i
+			break
+
+	subStart = subEnd
+	while subStart > subPos:
+		pos = posDict[sentence[subStart - 1]]
+		if pos == "JJ" or pos == "DT":
+			subStart -= 1
+		else:
+			break
+
+	return (subStart, subEnd)
 
 sentences = readFile('translated.txt')
 tagged = readFile('translated-tagged.txt')
@@ -26,16 +43,17 @@ for line in tagged:
 		tags = string.split(word, '_')
 		posDict[tags[0]] = tags[1]
 
-		#print posDict
-
-nouns = set(['NN','NNP','NNPS','NNS'])
+nouns = set(['NN','NNP','NNPS','NNS','PRP'])
 verbs = set(['VB','VBD','VBG','VBN','VBP','VBZ'])
+adverbs = set(['RB','RBR','RBS'])
+
+vowels = set(['a','e','i','o','u'])
 
 transform = []
 
 # Define reordering rules
 for sentence in sentences:
-	# Rule 1
+	# Rule 1 - first sentence
 	sentence = sentence.strip().split(' ')
 	if posDict[sentence[0]] == "IN": #preposition
 		#Find subject of prepositional phrase
@@ -46,35 +64,50 @@ for sentence in sentences:
 				break
 		
 		#Find next subject
-		subEnd = None
-		for i in range(subPos + 1, len(sentence)):
-			if posDict[sentence[i]] in nouns:
-				subEnd = i
-				break
-		
-		subStart = subEnd
-		while subStart > subPos:
-			pos = posDict[sentence[subStart - 1]]
-			if pos == "JJ" or pos == "DT":
-				subStart -= 1
-			else:
-				break
+		(subStart, subEnd) = findNounPhrase(sentence, subPos + 1)
 
 		if subEnd != None:
 			for i in range(subStart, subEnd + 1):
 				subPos += 1
 				sentence.insert(subPos, sentence.pop(i))
 	
-	#Rule 2
+	#Rule 2 - swap verb and pronoun after it
 	for i in range(len(sentence) - 1):
 		if posDict[sentence[i]] in verbs and posDict[sentence[i + 1]] == "PRP":
-			print "ASDF"
-			print sentence[i]
 			sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
-			print sentence[i]
-			print sentence
 		
+	#Rule 3 - swap modal and nouns/prp
+	for i in range(len(sentence)):
+		if posDict[sentence[i]] == 'MD':
+			(subStart, subEnd) = findNounPhrase(sentence, i + 1)
+			sentence.insert(subEnd, sentence.pop(i))
+			break
+			
+	#Rule 4 - move verb at end of sentence after modal
+	if posDict[sentence[-1]] in verbs:
+		for i in range(len(sentence)):
+			if posDict[sentence[i]] == 'MD':
+				ind = i + 1
+				while posDict[sentence[ind]] in adverbs:
+					ind += 1
+				sentence.insert(ind, sentence.pop())
+				
+
+	#Rule - move verb at end of sentence after modal
+
+	#Rule 7 - swap VBN
+
+	#Rule 10
+	for i in range(len(sentence) - 1):
+                if sentence[i] == 'a' and sentence[i + 1][0] in vowels:
+                        sentence[i] = 'an'
+		elif sentence[i] == 'an' and sentence[i + 1][0] not in vowels:
+			sentence[i] = 'a'
+
+	# Post processing, capitalize first letter, add period at end.
+	sentence[0] = sentence[0].capitalize()
 	joined = ' '.join(sentence)
+	joined += '.'
 	transform.append(joined)
 
 # Display final output
