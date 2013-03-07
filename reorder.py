@@ -109,7 +109,7 @@ for sentence in sentences:
 	for i in range(len(sentence) - 1):
 		if sentence[i] == ',' and sentence[i + 1] == 'the':
 			sentence[i + 1] = 'which'
-			
+			posDict['which'] = 'WDT'
 			sentence.insert(i + 2, sentence.pop(-2))
 
 	#Rule 6 - make sure subject and verb agree
@@ -117,8 +117,22 @@ for sentence in sentences:
 	# 	if sentence[i] == 
 	
 	#Rule 7 - swap consec VBN
+	for i in range(len(sentence) - 1):
+                if posDict[sentence[i]] == 'VBN' and posDict[sentence[i + 1]] == 'VBN':
+			print i
+			print len(sentence)
+			print sentence[i]
+			print sentence[i + 1]
+                        sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
 
 	#Rule 8 - replace 'are it' -> 'there exists'
+	for i in range(len(sentence) - 1):
+		if ((sentence[i] == 'are' and sentence[i + 1] == 'it') or
+		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
+			sentence[i], sentence[i + 1] = 'there', 'is'
+			
+
+	
 
 	#Rule 10
 	for i in range(len(sentence) - 1):
