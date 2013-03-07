@@ -1,7 +1,3 @@
-Team:
-Bryan Cheng - bbch
-Simon Zheng - szheng0
-
 Original text:
 
 Mit sechs Jahren beginnt für Kinder in Deutschland die Schule. 
@@ -75,13 +71,4 @@ Error analysis:
 
 Comparative analysis for Google Translate, including where your system and Google agree, what your system does better than Google Translate, and what Google Translate does better than your system.
 
-It looks like one advantage of Google Translate is they take the context of a word before translating it. We were limited to translating word by word and lose some of this context. For example, by itself 'der' means 'the'. But in some contexts, like the Genitive tense, 'der' means 'of the'.
-
-
 A brief statement on the responsibilities of different members of the team. (Team members will normally get the same grade, but we reserve the right to differentiate in egregious cases.)
-
-Because Simon has some knowledge of German, he helped with manually translating the text. Since we were just translating word by word, both of us were able to input each word into a dictionary and get the first definition.
-
-Simon wrote the code to read in our dictionary, perform the translation word for word, and then output this data. Bryan linked up the Stanford POS tagger and read in Simon's output, then produced another file with each words POS appended to each word.
-
-For the transformations afterward, 
