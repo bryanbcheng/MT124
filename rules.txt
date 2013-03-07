@@ -1,0 +1,14 @@
+Rules for German translation:
+
+(Since verb always the second phrase):
+1. If first words in the sentence is not a noun phrase (e.g. preposition like 'mit...' or 'danach'), then bring the last part of the sentence, which should be the subject noun phrase to the beginning
+
+(Genitive)
+2. If a noun phrase is followed by a genitive article + another noun phrase, then add 'of the' (e.g. in Teil der Schüler und Schülerinnen)
+
+3. Drop definite articles for big concepts (e.g. 'geht dann auf die Hauptschule' -> 'go to secondary modern school').
+
+
+4. Prepositions are different for certain concepts (e.g. 'auf' is usually 'on' or 'at' but when we say 'geht dann auf die Hauptschule', we mean 'go to secondary modern school'). 
+
+5. 
