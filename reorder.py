@@ -59,10 +59,11 @@ for sentence in sentences:
 				subStart -= 1
 			else:
 				break
-		
-		for i in range(subStart, subEnd + 1):
-			subPos += 1
-			sentence.insert(subPos, sentence.pop(i))
+
+		if subEnd != None:
+			for i in range(subStart, subEnd + 1):
+				subPos += 1
+				sentence.insert(subPos, sentence.pop(i))
 	
 	#Rule 2
 	for i in range(len(sentence) - 1):
