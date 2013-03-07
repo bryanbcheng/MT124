@@ -19,6 +19,7 @@ def findNounPhrase(sentence, index):
 	subEnd = None
 	numPreps = 0
 	numNouns = 0
+	# print "looking at sentence %s" %sentence
 	for i in range(subPos + 1, len(sentence)):
 		if posDict[sentence[i]] == "IN":
 			numPreps += 1
@@ -36,6 +37,10 @@ def findNounPhrase(sentence, index):
 			subStart -= 1
 		else:
 			break
+	# print "returning substart = "
+	# print subStart
+	# print "and subend = "
+	# print subEnd
 	return (subStart, subEnd)
 
 sentences = readFile('translated.txt')
@@ -92,8 +97,9 @@ for sentence in sentences:
 	for i in range(len(sentence)):
 		if posDict[sentence[i]] == 'MD':
 			(subStart, subEnd) = findNounPhrase(sentence, i + 1)
-			sentence.insert(subEnd, sentence.pop(i))
-			break
+			if subEnd != None:
+				sentence.insert(subEnd, sentence.pop(i))
+				break
 			
 	#Rule 4 - move verb at end of sentence after modal
 	if posDict[sentence[-2]] in verbs:
@@ -119,10 +125,10 @@ for sentence in sentences:
 	#Rule 7 - swap consec VBN
 	for i in range(len(sentence) - 1):
                 if posDict[sentence[i]] == 'VBN' and posDict[sentence[i + 1]] == 'VBN':
-			print i
-			print len(sentence)
-			print sentence[i]
-			print sentence[i + 1]
+			# print i
+			# print len(sentence)
+			# print sentence[i]
+			# print sentence[i + 1]
                         sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
 
 	#Rule 8 - replace 'are it' -> 'there exists'
