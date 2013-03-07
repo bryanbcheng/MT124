@@ -20,7 +20,7 @@ def findNounPhrase(sentence, index):
 	numPreps = 0
 	numNouns = 0
 	# print "looking at sentence %s" %sentence
-	for i in range(subPos + 1, len(sentence)):
+	for i in range(index, len(sentence)):
 		if posDict[sentence[i]] == "IN":
 			numPreps += 1
 
@@ -31,9 +31,9 @@ def findNounPhrase(sentence, index):
 				break
 
 	subStart = subEnd
-	while subStart > subPos:
+	while subStart > index - 1:
 		pos = posDict[sentence[subStart - 1]]
-		if pos == "JJ" or pos == "DT":
+		if pos in adjectives or pos in adverbs or pos == "DT":
 			subStart -= 1
 		else:
 			break
@@ -59,9 +59,10 @@ for line in tagged:
 		else:
 			posDict[tags[0]] = tags[1]
 
-nouns = set(['NN','NNP','NNPS','NNS','PRP'])
+nouns = set(['NN','NNP','NNPS','NNS'])
 verbs = set(['VB','VBD','VBG','VBN','VBP','VBZ'])
 adverbs = set(['RB','RBR','RBS'])
+adjectives = set(['JJ', 'JJR', 'JJS'])
 
 vowels = set(['a','e','i','o','u'])
 
@@ -69,8 +70,15 @@ transform = []
 
 # Define reordering rules
 for sentence in sentences:
-
 	sentence = sentence.strip().split(' ')
+
+	#Rule 8 - replace 'are it' -> 'there exists'
+	for i in range(len(sentence) - 1):
+		if ((sentence[i] == 'are' and sentence[i + 1] == 'it') or
+		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
+			sentence[i], sentence[i + 1] = 'there', 'is'
+
+			
 	# Rule 1 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front of the verb
 	if posDict[sentence[0]] == "IN": #preposition
 		#Find subject of prepositional phrase
@@ -130,15 +138,45 @@ for sentence in sentences:
 			# print sentence[i]
 			# print sentence[i + 1]
                         sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
-
-	#Rule 8 - replace 'are it' -> 'there exists'
-	for i in range(len(sentence) - 1):
-		if ((sentence[i] == 'are' and sentence[i + 1] == 'it') or
-		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
-			sentence[i], sentence[i + 1] = 'there', 'is'
 			
 
-	
+	# Rule 8 - fixed genitive tense in lines 
+	# #4 ('a part the pupils' -> 'a part of the pupils'), 
+	# #8 ('an other part the pupils' -> '... an other part of the pupils'), 
+	# #9 ('... the termination the middle maturation' -> '... the termination of the middle maturation')
+	indicesToAddOf = []
+
+	subPos = None
+	if posDict[sentence[0]] == "IN": #preposition
+		#Find subject of prepositional phrase
+		for i in range(1,len(sentence)):
+			if posDict[sentence[i]] in nouns:
+				subPos = i
+				break
+		
+	#Find next subject
+	if subPos == None:
+		beginIndex = 0
+	else:
+		beginIndex = subPos+1
+
+	# print "looking at sentence:"
+	# print sentence
+	# print "looking at range %d and %d" %(beginIndex, len(sentence)-1)
+	for i in range(beginIndex, len(sentence) - 1):
+		if posDict[sentence[i]] in nouns:
+			# print "noun is %s and next word is %s and pos is %s" %(sentence[i], sentence[i+1], posDict[sentence[i+1]])
+			if posDict[sentence[i+1]] == "DT":
+				# print "****added %d****" %(i+1)
+				indicesToAddOf.append(i+1)
+
+	for index in indicesToAddOf:
+		sentence.insert(index, 'of')
+		for indexPos in range(len(indicesToAddOf)):
+			indicesToAddOf[indexPos] += 1
+
+
+
 
 	#Rule 10
 	for i in range(len(sentence) - 1):
