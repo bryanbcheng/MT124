@@ -1,5 +1,3 @@
-
-
 def readFile(filename):
 	f = open(filename)
 	lines = f.readlines()
@@ -36,18 +34,38 @@ for line in lines:
 	wordVector = line.split()
 	newSentence = ""
 	wordsFromVecSeen = 0
-	totalNumWords = len(wordVector)
+	totalNumWords = len(wordVector) + line.count(".") + line.count(",") + line.count("(") + line.count(")")
+	# for word in wordVector:
+	# 	word = word.strip(".,\"()")
+	# 	# print "the word %s translates to %s" %(word, dictionary[word])
+	# 	wordsFromVecSeen += 1
+	# 	newSentence += dictionary[word]
+	# 	if wordsFromVecSeen == totalNumWords:
+	# 		newSentence += "\n"
+	# 	else:
+	# 		newSentence += " "
+	# 	translatedWords.append(dictionary[word])
+	# 	print "%s" %(word)
+
 	for word in wordVector:
-		word = word.strip(".,\"()")
-		# print "the word %s translates to %s" %(word, dictionary[word])
-		wordsFromVecSeen += 1
-		newSentence += dictionary[word]
-		if wordsFromVecSeen == totalNumWords:
-			newSentence += "\n"
-		else:
-			newSentence += " "
-		translatedWords.append(dictionary[word])
-		# print "%s" %(word)
+		word = word.replace(".", " .")
+		word = word.replace(",", " ,")
+		word = word.replace("(", "( ")
+		word = word.replace(")", " )")
+		word = word.strip("\"")
+		word = word.strip()
+		word = word.split(" ")
+		# print word
+		for word_or_punct in word:
+			# print "the word %s translates to %s" %(word, dictionary[word])
+			wordsFromVecSeen += 1
+			newSentence += dictionary[word_or_punct]
+			if wordsFromVecSeen == totalNumWords:
+				newSentence += "\n"
+			else:
+				newSentence += " "
+			translatedWords.append(dictionary[word_or_punct])
+			# print "%s" %(word_or_punct)
 	print newSentence
 
 # print translatedWords

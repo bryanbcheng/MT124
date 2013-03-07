@@ -35,7 +35,7 @@ transform = []
 
 # Define reordering rules
 for sentence in sentences:
-	# Rule 1
+	# Rule 1 - 
 	sentence = sentence.strip().split(' ')
 	if posDict[sentence[0]] == "IN": #preposition
 		#Find subject of prepositional phrase
@@ -64,18 +64,20 @@ for sentence in sentences:
 			for i in range(subStart, subEnd + 1):
 				subPos += 1
 				sentence.insert(subPos, sentence.pop(i))
+
+	print sentence
 	
 	#Rule 2
-	for i in range(len(sentence) - 1):
-		if posDict[sentence[i]] in verbs and posDict[sentence[i + 1]] == "PRP":
-			print "ASDF"
-			print sentence[i]
-			sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
-			print sentence[i]
-			print sentence
+	# for i in range(len(sentence) - 1):
+	# 	if posDict[sentence[i]] in verbs and posDict[sentence[i + 1]] == "PRP":
+	# 		print "ASDF"
+	# 		print sentence[i]
+	# 		sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
+	# 		print sentence[i]
+	# 		print sentence
 		
-	joined = ' '.join(sentence)
-	transform.append(joined)
+	# joined = ' '.join(sentence)
+	# transform.append(joined)
 
 # Display final output
 print transform

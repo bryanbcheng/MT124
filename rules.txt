@@ -1,10 +1,33 @@
 Rules for German translation:
 
 (Since verb always the second phrase):
-1. If first words in the sentence is not a noun phrase (e.g. preposition like 'mit...' or 'danach'), then bring the last part of the sentence, which should be the subject noun phrase to the beginning
+1. If first words in the sentence is not a noun phrase (e.g. preposition like 'mit...' or 'danach'), then bring the next part of the sentence, which should be the subject noun phrase to the beginning
 
-2. If the first phrase in the sentence is a noun phrase, move the prepositional/noun phrase from the end to after the verb (this should be the object. for example: 'Alle Kinder gehen zuerst vier Jahre lang gemeinsam auf die Grundschule.' word-by-word translates to 'all children go first four years together to elementary school' but it should be 'all children go together to elementary school first four')
+2. If there is a pronoun after a verb, swap the two.
 
-3. If the first verb of the sentence is a modal ('wants', 'must', etc), then move the last verb to right after the modal (e.g. 'Zweimal die Woche müssen die "Azubis" (Auszubildende oder Lehrlinge) auf die Berufsschule gehen.' says 'must ... to the trade school go' but should be 'must go ... to the trade school')
+3. If the first phrase in the sentence is a noun phrase, move the prepositional/noun phrase from the end to after the verb (this should be the object. for example: 'Alle Kinder gehen zuerst vier Jahre lang gemeinsam auf die Grundschule.' word-by-word translates to 'all children go first four years together to elementary school' but it should be 'all children go together to elementary school first four')
 
-4.
+4. If the first verb of the sentence is a modal ('wants', 'must', etc), then move the last verb to directly after the modal (e.g. 'Zweimal die Woche müssen die "Azubis" (Auszubildende oder Lehrlinge) auf die Berufsschule gehen.' says 'must ... to the trade school go' but should be 'must go ... to the trade school')
+
+
+
+
+// Are these rules?
+-Change 'they go of the school' to 'they go to the school'
+-Add of to the genitive case 'of'
+-Delete 'the' from proper nouns
+
+
+
+
+Yesterday, the red cat ran to the store
+
+
+
+Gestern lief der rote Katze in den Laden
+
+Yesterday, ran the red cat in the store
+
+
+
+

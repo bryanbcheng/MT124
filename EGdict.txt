@@ -105,3 +105,9 @@ vorbereitet prepared
 worden been
 zehnten tenth
 zuerst first
+. .
+, ,
+\ \
+" "
+( (
+) )
