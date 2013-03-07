@@ -1,4 +1,4 @@
-Abitur university-entrance diploma
+Abitur university-entrance qualification
 Abschluss termination
 Alle all
 Als as
@@ -99,7 +99,7 @@ trennen separate
 umfasst includes
 und and
 vier four
-von of
+von from
 vor before
 vorbereitet prepared
 worden been

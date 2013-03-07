@@ -17,6 +17,8 @@ Rules for German translation:
 -Add of to the genitive case 'of'
 -Delete 'the' from proper nouns
 
+// 'gibt es' / 'es gibt' -> 'are it' (incorrect) when it should be 'there is'/'there are' (correct)
+
 
 
 
