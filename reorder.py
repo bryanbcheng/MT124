@@ -160,13 +160,13 @@ for sentence in sentences:
 	else:
 		beginIndex = subPos+1
 
-	# print "looking at sentence:"
-	# print sentence
 	# print "looking at range %d and %d" %(beginIndex, len(sentence)-1)
 	for i in range(beginIndex, len(sentence) - 1):
 		if posDict[sentence[i]] in nouns:
 			# print "noun is %s and next word is %s and pos is %s" %(sentence[i], sentence[i+1], posDict[sentence[i+1]])
 			if posDict[sentence[i+1]] == "DT":
+				# print "looking at sentence:"
+				# print sentence
 				# print "****added %d****" %(i+1)
 				indicesToAddOf.append(i+1)
 
