@@ -3,12 +3,8 @@ Rules for German translation:
 (Since verb always the second phrase):
 1. If first words in the sentence is not a noun phrase (e.g. preposition like 'mit...' or 'danach'), then bring the last part of the sentence, which should be the subject noun phrase to the beginning
 
-(Genitive)
-2. If a noun phrase is followed by a genitive article + another noun phrase, then add 'of the' (e.g. in Teil der Schüler und Schülerinnen)
+2. If the first phrase in the sentence is a noun phrase, move the prepositional/noun phrase from the end to after the verb (this should be the object. for example: 'Alle Kinder gehen zuerst vier Jahre lang gemeinsam auf die Grundschule.' word-by-word translates to 'all children go first four years together to elementary school' but it should be 'all children go together to elementary school first four')
 
-3. Drop definite articles for big concepts (e.g. 'geht dann auf die Hauptschule' -> 'go to secondary modern school').
+3. If the first verb of the sentence is a modal ('wants', 'must', etc), then move the last verb to right after the modal (e.g. 'Zweimal die Woche müssen die "Azubis" (Auszubildende oder Lehrlinge) auf die Berufsschule gehen.' says 'must ... to the trade school go' but should be 'must go ... to the trade school')
 
-
-4. Prepositions are different for certain concepts (e.g. 'auf' is usually 'on' or 'at' but when we say 'geht dann auf die Hauptschule', we mean 'go to secondary modern school'). 
-
-5. 
+4.
