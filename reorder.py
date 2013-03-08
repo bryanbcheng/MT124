@@ -164,7 +164,8 @@ for sentence in sentences:
 
 	#Rule 6/7 - move verb at end of sentence after modal or if no modal, is or are
 	vbEnd = findVerbAtEnd(sentence)
-        while vbEnd != 0:
+	consecShifts = 0 # if verb belongs at end
+        while vbEnd != 0 and consecShifts < 3:
 		modalFound = False
                 for i in range(vbEnd - 1, -len(sentence), -1):
 			if posDict[sentence[i]] == 'MD':
@@ -172,7 +173,7 @@ for sentence in sentences:
                                 ind = i + 1
                                 while posDict[sentence[ind]] in adverbs:
                                         ind += 1
-                                sentence.insert(ind, sentence.pop(vbEnd))
+                                sentence.insert(ind + 1, sentence.pop(vbEnd))
 				break
 
 		if not modalFound:
@@ -182,6 +183,7 @@ for sentence in sentences:
 					break
 		
 		vbEnd = findVerbAtEnd(sentence)
+		consecShifts += 1
 
 	#Rule 8 - abbreviated match verb with preposition
 	for i in range(len(sentence)):
