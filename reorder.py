@@ -31,7 +31,7 @@ def findNounPhrase(sentence, index):
 				break
 
 	subStart = subEnd
-	while subStart > index - 1:
+	while subStart > index:
 		pos = posDict[sentence[subStart - 1]]
 		if pos in adjectives or pos in adverbs or pos == "DT":
 			subStart -= 1
@@ -42,6 +42,35 @@ def findNounPhrase(sentence, index):
 	# print "and subend = "
 	# print subEnd
 	return (subStart, subEnd)
+
+def findNoun(sentence, index):
+	subEnd = None
+
+	for i in range(index, len(sentence)):
+		if posDict[sentence[i]] in nouns:
+			subEnd = i
+			break
+
+	subStart = subEnd
+        while subStart > index:
+                pos = posDict[sentence[subStart - 1]]
+                if pos in adjectives or pos in adverbs or pos == "DT":
+                        subStart -= 1
+                else:
+                        break
+
+	return (subStart, subEnd)
+
+def findVerbAtEnd(sentence):
+	backInd = -1
+	
+	while sentence[backInd] in punctuation:
+		backInd -= 1
+
+	if posDict[sentence[backInd]] in verbs:
+		return backInd
+	else:
+		return 0
 
 sentences = readFile('translated.txt')
 tagged = readFile('translated-tagged.txt')
@@ -69,6 +98,8 @@ nouns = set(['NN','NNP','NNPS','NNS','PRP'])
 verbs = set(['VB','VBD','VBG','VBN','VBP','VBZ'])
 adverbs = set(['RB','RBR','RBS'])
 adjectives = set(['JJ', 'JJR', 'JJS'])
+punctuation = set([',','.','(',')'])
+
 
 vowels = set(['a','e','i','o','u'])
 
@@ -102,10 +133,16 @@ for sentence in sentences:
 		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
 			sentence[i], sentence[i + 1] = 'there', 'is'
 
-	# Rule 3 - swap verb and pronoun after it
+	# Rule 3 - swap verb and pronoun/noun after it, if no noun before verb
 	for i in range(len(sentence) - 1):
-		if posDict[sentence[i]] in verbs and posDict[sentence[i + 1]] == "PRP":
-			sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
+		if posDict[sentence[i]] in verbs:
+			firstNoun = findNoun(sentence, 0)
+			nextNoun = findNoun(sentence, i + 1)
+			
+			if firstNoun == nextNoun and nextNoun[0] == i + 1:
+				sentence.insert(nextNoun[1] + 1, sentence[i])
+				sentence.pop(i)
+				i = nextNoun[1] + 1
 		
 	#Rule 4 - swap modal and nouns/prp
 	for i in range(len(sentence)):
@@ -114,23 +151,37 @@ for sentence in sentences:
 			if subEnd != None:
 				sentence.insert(subEnd, sentence.pop(i))
 				break
-			
-	#Rule 5 - move verb at end of sentence after modal
-	if posDict[sentence[-2]] in verbs:
-		for i in range(len(sentence)):
-			if posDict[sentence[i]] == 'MD':
-				ind = i + 1
-				while posDict[sentence[ind]] in adverbs:
-					ind += 1
-				sentence.insert(ind, sentence.pop(-2))
-				
 
-	#Rule 6 - change the after comma to which, move verb at end after comma
+	#Rule 5 - change the after comma to which, move verb at end after comma
 	for i in range(len(sentence) - 1):
 		if sentence[i] == ',' and sentence[i + 1] == 'the':
 			sentence[i + 1] = 'which'
 			posDict['which'] = 'WDT'
-			sentence.insert(i + 2, sentence.pop(-2))
+			backInd = findVerbAtEnd(sentence)
+			
+			if backInd != 0:
+				sentence.insert(i + 2, sentence.pop(backInd))
+
+	#Rule 6 - move verb at end of sentence after modal or if no modal, is or are
+	vbEnd = findVerbAtEnd(sentence)
+        while vbEnd != 0:
+		modalFound = False
+                for i in range(vbEnd - 1, -len(sentence), -1):
+			if posDict[sentence[i]] == 'MD':
+				modalFound = True
+                                ind = i + 1
+                                while posDict[sentence[ind]] in adverbs:
+                                        ind += 1
+                                sentence.insert(ind, sentence.pop(vbEnd))
+				break
+
+		if not modalFound:
+			for i in range(len(sentence) + vbEnd + 1):
+				if sentence[i] == 'is' or sentence[i] == 'are':
+					sentence.insert(i + 1, sentence.pop(vbEnd))
+					break
+		
+		vbEnd = findVerbAtEnd(sentence)
 
 	#Rule 7 - abbreviated match verb with preposition
 	for i in range(len(sentence)):
@@ -152,10 +203,15 @@ for sentence in sentences:
 					break
 				ind += 1
 	
-	#Rule 8 - swap consec VBN
-	for i in range(len(sentence) - 1):
-                if posDict[sentence[i]] == 'VBN' and posDict[sentence[i + 1]] == 'VBN':
-                        sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
+	#Rule 8 - fix VBN (change are or it before to has / have)
+	for i in range(len(sentence)):
+                if posDict[sentence[i]] == 'VBN':
+			if sentence[i - 1] == 'is':
+				sentence[i - 1] = 'has'
+				posDict['has'] = ''
+			elif sentence[i - 1] == 'are':
+				sentence[i - 1] = 'have'
+				posDit['have'] = ''
 			
 	# Rule 9 - fixed genitive tense in lines 
 	# #4 ('a part the pupils' -> 'a part of the pupils'), 
