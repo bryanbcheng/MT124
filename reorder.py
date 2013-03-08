@@ -19,7 +19,8 @@ def findNounPhrase(sentence, index):
 	subEnd = None
 	numPreps = 0
 	numNouns = 0
-	for i in range(subPos + 1, len(sentence)):
+	# print "looking at sentence %s" %sentence
+	for i in range(index, len(sentence)):
 		if posDict[sentence[i]] == "IN":
 			numPreps += 1
 
@@ -30,12 +31,16 @@ def findNounPhrase(sentence, index):
 				break
 
 	subStart = subEnd
-	while subStart > subPos:
+	while subStart > index - 1:
 		pos = posDict[sentence[subStart - 1]]
-		if pos == "JJ" or pos == "DT":
+		if pos in adjectives or pos in adverbs or pos == "DT":
 			subStart -= 1
 		else:
 			break
+	# print "returning substart = "
+	# print subStart
+	# print "and subend = "
+	# print subEnd
 	return (subStart, subEnd)
 
 sentences = readFile('translated.txt')
@@ -63,6 +68,7 @@ for line in vp:
 nouns = set(['NN','NNP','NNPS','NNS','PRP'])
 verbs = set(['VB','VBD','VBG','VBN','VBP','VBZ'])
 adverbs = set(['RB','RBR','RBS'])
+adjectives = set(['JJ', 'JJR', 'JJS'])
 
 vowels = set(['a','e','i','o','u'])
 
@@ -70,9 +76,16 @@ transform = []
 
 # Define reordering rules
 for sentence in sentences:
-
 	sentence = sentence.strip().split(' ')
-	# Rule 1 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front
+
+	#Rule 8 - replace 'are it' -> 'there exists'
+	for i in range(len(sentence) - 1):
+		if ((sentence[i] == 'are' and sentence[i + 1] == 'it') or
+		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
+			sentence[i], sentence[i + 1] = 'there', 'is'
+
+			
+	# Rule 1 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front of the verb
 	if posDict[sentence[0]] == "IN": #preposition
 		#Find subject of prepositional phrase
 		subPos = None
@@ -98,8 +111,9 @@ for sentence in sentences:
 	for i in range(len(sentence)):
 		if posDict[sentence[i]] == 'MD':
 			(subStart, subEnd) = findNounPhrase(sentence, i + 1)
-			sentence.insert(subEnd, sentence.pop(i))
-			break
+			if subEnd != None:
+				sentence.insert(subEnd, sentence.pop(i))
+				break
 			
 	#Rule 4 - move verb at end of sentence after modal
 	if posDict[sentence[-2]] in verbs:
@@ -142,17 +156,42 @@ for sentence in sentences:
 	for i in range(len(sentence) - 1):
                 if posDict[sentence[i]] == 'VBN' and posDict[sentence[i + 1]] == 'VBN':
                         sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
-
-	#Rule 8 - replace 'are it' -> 'there exists'
-	for i in range(len(sentence) - 1):
-		if ((sentence[i] == 'are' and sentence[i + 1] == 'it') or
-		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
-			sentence[i], sentence[i + 1] = 'there', 'is'
 			
+	# Rule 8 - fixed genitive tense in lines 
+	# #4 ('a part the pupils' -> 'a part of the pupils'), 
+	# #8 ('an other part the pupils' -> '... an other part of the pupils'), 
+	# #9 ('... the termination the middle maturation' -> '... the termination of the middle maturation')
+	indicesToAddOf = []
 
-	#Rule 9 - fix sentence 5, 13
+	subPos = None
+	if posDict[sentence[0]] == "IN": #preposition
+		#Find subject of prepositional phrase
+		for i in range(1,len(sentence)):
+			if posDict[sentence[i]] in nouns:
+				subPos = i
+				break
+		
+	#Find next subject
+	if subPos == None:
+		beginIndex = 0
+	else:
+		beginIndex = subPos+1
 
-	# Rule 10 - genitive?
+	# print "looking at range %d and %d" %(beginIndex, len(sentence)-1)
+	for i in range(beginIndex, len(sentence) - 1):
+		if posDict[sentence[i]] in nouns:
+			# print "noun is %s and next word is %s and pos is %s" %(sentence[i], sentence[i+1], posDict[sentence[i+1]])
+			if posDict[sentence[i+1]] == "DT":
+				# print "looking at sentence:"
+				# print sentence
+				# print "****added %d****" %(i+1)
+				indicesToAddOf.append(i+1)
+
+	for index in indicesToAddOf:
+		sentence.insert(index, 'of')
+		for indexPos in range(len(indicesToAddOf)):
+			indicesToAddOf[indexPos] += 1
+
 
 	#Rule 11 - fix a and an
 	for i in range(len(sentence) - 1):

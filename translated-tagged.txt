@@ -11,5 +11,5 @@ after_IN goes_VBZ you_PRP on_IN a_DT technical_JJ college_NN or_CC also_RB on_IN
 as_IN third_JJ possibility_NN are_VBP it_PRP the_DT secondary_JJ school_NN ,_, the_DT on_IN a_DT university_NN studies_NNS prepared_VBN ._.
 the_DT secondary_JJ school_NN includes_VBZ eight_CD classes_NNS ._.
 -LRB-_-LRB- before_RB recently_RB is_VBZ the_DT time_NN on_IN the_DT secondary_JJ school_NN from_IN nine_CD on_IN eight_CD years_NNS reduced_VBN been_VBN ._. -RRB-_-RRB-
-on_IN the_DT end_NN of_IN the_DT secondary_JJ schools_NNS make_VBP pupil_NN the_DT university-entrance_JJ qualification_NN ._.
+on_IN the_DT end_NN of_IN the_DT secondary_JJ schools_NNS do_VBP pupil_NN the_DT university-entrance_JJ qualification_NN ._.
 without_IN university-entrance_JJ qualification_NN -LRB-_-LRB- baccalaureate_NN -RRB-_-RRB- can_MD you_PRP not_RB study_VB ._.
