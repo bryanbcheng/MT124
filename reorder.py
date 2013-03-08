@@ -78,14 +78,8 @@ transform = []
 for sentence in sentences:
 	sentence = sentence.strip().split(' ')
 
-	#Rule 1 - replace 'are it' -> 'there exists'
-	for i in range(len(sentence) - 1):
-		if ((sentence[i] == 'are' and sentence[i + 1] == 'it') or
-		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
-			sentence[i], sentence[i + 1] = 'there', 'is'
-
 			
-	# Rule 2 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front of the verb
+	# Rule 1 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front of the verb
 	if posDict[sentence[0]] == "IN": #preposition
 		#Find subject of prepositional phrase
 		subPos = None
@@ -101,7 +95,13 @@ for sentence in sentences:
 			for i in range(subStart, subEnd + 1):
 				subPos += 1
 				sentence.insert(subPos, sentence.pop(i))
-	
+
+	#Rule 2 - replace 'are it' -> 'there exists'
+	for i in range(len(sentence) - 1):
+		if ((sentence[i] == 'are' and sentence[i + 1] == 'it') or
+		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
+			sentence[i], sentence[i + 1] = 'there', 'is'
+
 	# Rule 3 - swap verb and pronoun after it
 	for i in range(len(sentence) - 1):
 		if posDict[sentence[i]] in verbs and posDict[sentence[i + 1]] == "PRP":
@@ -192,6 +192,7 @@ for sentence in sentences:
 		for indexPos in range(len(indicesToAddOf)):
 			indicesToAddOf[indexPos] += 1
 
+	
 
 	#Rule 11 - fix a and an
 	for i in range(len(sentence) - 1):
