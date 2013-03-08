@@ -100,11 +100,13 @@ Google's translated text:
 ****************************************************************************************
 
 General observations:
+*** Simon
 
 The F language you're working with and any general observations about it, including particular challenges in translating your choice of F language to English (relative to other possible choices for F).
 We are translating from German to English.
 
-One of the biggest problems we had was translating words that do not have an exact English translation. This included all the different types of schools and we were only able to generalize them to for example vocational school or trade school. EXPLAIN A LITTLE MORE ABOUT THIS?? There seems to be many such words like this which are really specific, yet can only be generalized into many words in the English language.
+One of the biggest problems we had was translating words that do not have an exact English translation. This included all the different types of schools and we were only able to generalize them to for example vocational school or trade school. 
+*******Simon: EXPLAIN A LITTLE MORE ABOUT THIS??%%%%%%%%%%%%%%% There seems to be many such words like this which are really specific, yet can only be generalized into many words in the English language.
 
 One option for this would be to try and flesh out a full definition for each word even though it will make the translated text much longer, but will be more clear and informative. Another choice could have been to leave the original word as is and hope the reader knows some information about the native German word.
 ****************************************************************************************
@@ -112,32 +114,38 @@ One option for this would be to try and flesh out a full definition for each wor
 Rules:
 1) Finding and moving the subject of the sentence after a prepositional phrase: 
 
-2)
+2) ***Simon
 
-3)
+3) ***Bryan
 
-4)
+4) ***Simon
 
-5)
+5) ***Simon
 
-6)
+6) ***Simon related to 4
 
-7)
+7) ***Simon
 
-8) Swapping consecutive past participles: In German, if there is a sentence with multiple past participles in the past perfect tense, their orders are swapped. For example, consider the sentence in our text: 'Vor kurzem ist die Zeit auf dem Gymnasium von neun auf acht Jahre reduziert worden', which in a word-by-word translation translates to 'Before recently, is the time on high school reduced been', when it should translate to 'Recently, the time in high school has been reduced from nine years to eight years'. While there are various problems in this translation, one obvious problem is that the order of 'reduziert' (reduced) and 'worden' (been) is 'reduziert worden' (reduced been). In order to correct for this, we swap any two consecutive past participles because in German, the main past participle is always after the subordinate past participle.
-*** Bryan: update above rule #8 based on your changes
+mention merged with 6 second half moving verb at end when no modal (implicitly swapping VBN)
 
-9) Handling the Genitive Tense: One complication that we ran into while translating from German to English was elegantly handling the Genitive tense, which exists in German but not in English. The Genitive tense indicates possession in German, so if we wanted to say 'at the end of high school', we could say 'Am Ende des Gymnasiums', where the 'des' is the definite article 'the' conjugated into its Genitive form, and therefore translates to 'of the'. 'Des' is used before masculine and neuter nouns but for feminine nouns, we must use the definite article 'der' for the Genitive tense. The problem is that 'der' is used in various other tenses to mean 'the' instead of 'of the'. Therefore, when doing a word-by-word translation, we cannot be sure whether or not 'der' translates to 'the' or 'of the'. 
+Swapping consecutive past participles: In German, if there is a sentence with multiple past participles in the past perfect tense, their orders are swapped. For example, consider the sentence in our text: 'Vor kurzem ist die Zeit auf dem Gymnasium von neun auf acht Jahre reduziert worden', which in a word-by-word translation translates to 'Before recently, is the time on high school reduced been', when it should translate to 'Recently, the time in high school has been reduced from nine years to eight years'. While there are various problems in this translation, one obvious problem is that the order of 'reduziert' (reduced) and 'worden' (been) is 'reduziert worden' (reduced been). In order to correct for this, we swap any two consecutive past participles because in German, the main past participle is always after the subordinate past participle.
+
+8) *** Bryan: update above rule #8 based on your changes
+
+9) *** Bryan
+
+10) Handling the Genitive Tense: One complication that we ran into while translating from German to English was elegantly handling the Genitive tense, which exists in German but not in English. The Genitive tense indicates possession in German, so if we wanted to say 'at the end of high school', we could say 'Am Ende des Gymnasiums', where the 'des' is the definite article 'the' conjugated into its Genitive form, and therefore translates to 'of the'. 'Des' is used before masculine and neuter nouns but for feminine nouns, we must use the definite article 'der' for the Genitive tense. The problem is that 'der' is used in various other tenses to mean 'the' instead of 'of the'. Therefore, when doing a word-by-word translation, we cannot be sure whether or not 'der' translates to 'the' or 'of the'. 
 
 Our rule that to fix this was to replace any 'the' in our post-word-by-word translation with 'of the'. As an example, consider 'Ein Teil der Schüler und Schülerinnen', which means 'a part of the male pupils and female pupils' where 'der' should translate to 'of the'. However, our word-by-word translation translates this sentence to 'a part the pupil and female pupils'. Since it doesn't make sense to have just the definite article 'the' between two nouns, we change the meaning to be 'of the'.
 
-10)
+11) ***Simon
 
 For each rule you create, a description of what it was supposed to do, what differences between Language F and English it was supposed to fix. Make sure you give a good example of the use of the rules in your running of your code.
 
 ****************************************************************************************
 
 Error analysis:
+*** Bryan
 , including ideas for how additional work might fix your remaining errors.
 
 Because German has a lot of subtleties, often times a word by word translation is not the best approach. I think even combining this with a bigram translation model would help some of the smaller issues lost by not having the context of each word.
@@ -145,6 +153,7 @@ Because German has a lot of subtleties, often times a word by word translation i
 ****************************************************************************************
 
 Comparative analysis for Google Translate, including where your system and Google agree, what your system does better than Google Translate, and what Google Translate does better than your system.
+*** Bryan
 
 It looks like one advantage of Google Translate is they take the context of a word before translating it. We were limited to translating word by word and lose some of this context. For example, by itself 'der' means 'the'. But in some contexts, like the Genitive tense, 'der' means 'of the'.
 
