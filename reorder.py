@@ -162,7 +162,7 @@ for sentence in sentences:
 			if backInd != 0:
 				sentence.insert(i + 2, sentence.pop(backInd))
 
-	#Rule 6 - move verb at end of sentence after modal or if no modal, is or are
+	#Rule 6/7 - move verb at end of sentence after modal or if no modal, is or are
 	vbEnd = findVerbAtEnd(sentence)
         while vbEnd != 0:
 		modalFound = False
@@ -183,7 +183,7 @@ for sentence in sentences:
 		
 		vbEnd = findVerbAtEnd(sentence)
 
-	#Rule 7 - abbreviated match verb with preposition
+	#Rule 8 - abbreviated match verb with preposition
 	for i in range(len(sentence)):
 		if posDict[sentence[i]] in verbs:
 			ind = i + 1
@@ -203,7 +203,7 @@ for sentence in sentences:
 					break
 				ind += 1
 	
-	#Rule 8 - fix VBN (change are or it before to has / have)
+	#Rule 9 - fix VBN (change are or it before to has / have)
 	for i in range(len(sentence)):
                 if posDict[sentence[i]] == 'VBN':
 			if sentence[i - 1] == 'is':
@@ -216,7 +216,7 @@ for sentence in sentences:
 	# Rule 9 - fixed genitive tense in lines 
 	# #4 ('a part the pupils' -> 'a part of the pupils'), 
 	# #8 ('an other part the pupils' -> '... an other part of the pupils'), 
-	# #9 ('... the termination the middle maturation' -> '... the termination of the middle maturation')
+	# #10 ('... the termination the middle maturation' -> '... the termination of the middle maturation')
 	indicesToAddOf = []
 
 	subPos = None
