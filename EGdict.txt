@@ -40,7 +40,7 @@ Schüler pupil
 Schülerinnen female pupils
 Sie you
 Teil part
-Universitätsstudium university studies
+Universitätsstudium university study
 Vor before
 Wege ways
 Woche week
@@ -78,7 +78,7 @@ künftigen future
 lang long
 lernen learn
 machen do
-man you
+man one
 meisten most
 mit with
 müssen must

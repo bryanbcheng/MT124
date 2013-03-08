@@ -171,7 +171,7 @@ for sentence in sentences:
 				subPos = i
 				break
 		
-	#Find next subject
+	#Find the beginning index of the next subject
 	if subPos == None:
 		beginIndex = 0
 	else:
@@ -181,7 +181,7 @@ for sentence in sentences:
 	for i in range(beginIndex, len(sentence) - 1):
 		if posDict[sentence[i]] in nouns:
 			# print "noun is %s and next word is %s and pos is %s" %(sentence[i], sentence[i+1], posDict[sentence[i+1]])
-			if posDict[sentence[i+1]] == "DT":
+			if posDict[sentence[i+1]] == "DT" and sentence[i] != "itself":
 				# print "looking at sentence:"
 				# print sentence
 				# print "****added %d****" %(i+1)
@@ -192,7 +192,7 @@ for sentence in sentences:
 		for indexPos in range(len(indicesToAddOf)):
 			indicesToAddOf[indexPos] += 1
 
-	
+
 
 	#Rule 11 - fix a and an
 	for i in range(len(sentence) - 1):

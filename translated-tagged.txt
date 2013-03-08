@@ -7,9 +7,9 @@ twice_RB the_DT week_NN must_MD the_DT trainees_NNS -LRB-_-LRB- apprentice_NN or
 there_RB learn_VBP they_PRP before_IN all_DT practical_JJ subject_NN for_IN the_DT future_JJ profession_NN ._.
 a_DT other_JJ part_NN the_DT pupil_NN and_CC female_JJ pupils_NNS goes_VBZ from_IN the_DT elementary_JJ school_NN on_IN the_DT junior_NN high_JJ school_NN ._.
 you_PRP ends_VBZ after_IN the_DT tenth_NN school_NN year_NN with_IN the_DT termination_NN the_DT middle_JJ maturation_NN ._.
-after_IN goes_VBZ you_PRP on_IN a_DT technical_JJ college_NN or_CC also_RB on_IN a_DT professional_JJ school_NN ._.
-as_IN third_JJ possibility_NN are_VBP it_PRP the_DT secondary_JJ school_NN ,_, the_DT on_IN a_DT university_NN studies_NNS prepared_VBN ._.
+after_IN goes_VBZ one_CD on_IN a_DT technical_JJ college_NN or_CC also_RB on_IN a_DT professional_JJ school_NN ._.
+as_IN third_JJ possibility_NN are_VBP it_PRP the_DT secondary_JJ school_NN ,_, the_DT on_IN a_DT university_NN study_NN prepared_VBD ._.
 the_DT secondary_JJ school_NN includes_VBZ eight_CD classes_NNS ._.
 -LRB-_-LRB- before_RB recently_RB is_VBZ the_DT time_NN on_IN the_DT secondary_JJ school_NN from_IN nine_CD on_IN eight_CD years_NNS reduced_VBN been_VBN ._. -RRB-_-RRB-
 on_IN the_DT end_NN of_IN the_DT secondary_JJ schools_NNS do_VBP pupil_NN the_DT university-entrance_JJ qualification_NN ._.
-without_IN university-entrance_JJ qualification_NN -LRB-_-LRB- baccalaureate_NN -RRB-_-RRB- can_MD you_PRP not_RB study_VB ._.
+without_IN university-entrance_JJ qualification_NN -LRB-_-LRB- baccalaureate_NN -RRB-_-RRB- can_MD one_PRP not_RB study_VB ._.
