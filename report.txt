@@ -100,32 +100,40 @@ Google's translated text:
 ****************************************************************************************
 
 General observations:
-*** Simon
 
 The F language you're working with and any general observations about it, including particular challenges in translating your choice of F language to English (relative to other possible choices for F).
 We are translating from German to English.
 
-One of the biggest problems we had was translating words that do not have an exact English translation. This included all the different types of schools and we were only able to generalize them to for example vocational school or trade school. 
-*******Simon: EXPLAIN A LITTLE MORE ABOUT THIS??%%%%%%%%%%%%%%% There seems to be many such words like this which are really specific, yet can only be generalized into many words in the English language.
+One of the biggest problems we had was translating words that do not have an exact English equivalent. This included all the different types of schools in Germany, including three different post- elementary school ("Grundschule") paths. These three paths are: 
+(1) "Hauptschule" (translated to secondary modern school), which leads into "Berufsschule" (a type of apprenticeship school)
+(2) "Realschule" (a type of junior high school), which leads into either "Fachschule" or "Berufsschule" (both types of vocational or trade schools)
+(3) "Gymnasium" (a pre-university school), which leads to university study
 
-One option for this would be to try and flesh out a full definition for each word even though it will make the translated text much longer, but will be more clear and informative. Another choice could have been to leave the original word as is and hope the reader knows some information about the native German word.
+In these cases, we weren't able to find direct English translations since these concepts of different educational paths in German does not have direct equivalents in the United States. We were only able to generalize these concepts to 'vocational school' or 'trade school'. There seems to be many such words like this which are really specific, yet can only be generalized into many general words in the English language.
+
+One option for this would be to try and flesh out a full definition for each word even though it will make the translated text much longer, but will be more clear and informative. Another choice could have been to leave the original word as is (and perhaps in quotations) and hope the reader knows some information about the native German word.
+
+Another large issue (that most of our rules try to address) is the need for the verb in German sentences to be the second word/phrase in the sentence (unless the sentence is a question or a imperative statement). Consider the example: "Die Katze isst das Eis" (The cat eats the ice cream). The verb is "isst", which means "eat" in the third-person singular. However, if we have a preposition, for example, in "There, the cat eats the ice cream", the sentence would become "Dort isst die Katze das Eis". Now, the subject of the sentence "Katze" is at the fourth place in the sentence, rather than the first. If we add modifiers (e.g. 'rote' (red)), then the sentence becomes "Dort isst die rote Katze das Eis", so it becomes somewhat difficult to identify the subject in certain German sentences. As such, our rules had to mostly address these re-orderings to make the translated German sentences sound more fluent in English.
 ****************************************************************************************
 
 Rules:
-1) Finding and moving the subject of the sentence after a prepositional phrase: 
+1) Finding and moving the subject of the sentence after a prepositional phrase: As previously mentioned, most German sentences maintain the structure that the verb must be the second word/phrase in the sentence. This is different from English, where the subject is almost always right before the verb. As such, if our sentences start with a prepositional phrase, then the subject gets moved after the verb. Consider our first sentence, "Mit sechs Jahren beginnt für Kinder in Deutschland die Schule." (word-by-word: "With six years begins for children in Germany the school"). The subject of this sentence is "the school" but it has been moved to the end of the sentence. As such, we need to identify where the initial preposition is ('with six years') and then look for the subject after the initial preposition. We cannot just look for a noun since the next noun 'children' is part of another prepositional phrase 'for children' and prepositional phrases cannot be subjects. As such, we look for the next noun that is not part of a prepositional phrase and all its descriptors (in this case, 'the school') and move that to after the first preposition ('with six years'). This involves counting the number of prepositions, counting the number of descriptors and identifying if the nouns we run into are part of prepositional phrases or not.
 
-2) ***Simon
+2) Translation 'es gibt' and 'gibt es' into 'there is': One of the most common expressions in every language is 'there is' or 'there are' (Spanish: 'hay'; German: 'es gibt'; Mandarin Chinese 'you3') because it is a extremely common use of language to indicate the existence of something. However, in German, the phrase is 'es gibt' or 'gibt es' depending on the context of the sentence. In a word-by-word translation to English, 'es' translates to 'it' and 'gibt' translates to 'are'. As such, when we do a word-by-word translation, we have 'it are' or 'are it' in our translated text, when we should have the proper bigram translation of 'es gibt' to be 'there is'. Since this is such a widely and generally used part of the German language, we created a rule that found any instances of 'it are' or 'are it' in our word-by-word translated text and replaced these with 'there is'. This fixes the problem of word-by-word translation of 'es gibt'/'gibt es' and does not introduce false positives since 'it are' would not come from any other phrase in German because the single subject 'it' and the plural verb 'are' are incompatible and would not be conjugated as such in German.
 
 3) ***Bryan
 
-4) ***Simon
+4) Swapping the modal and the subject: In German, modals introduce the problem of requiring that the subject of the sentence must be after the modal. Consider the end of our last line, "kann man nicht studieren" (which means 'can one not study'). We would like the sentence to say 'one can not study' but because German modals are followed by the subjects, our English translation will always have the modal before the subject. To fix this, we must go through the text and swap any modals with the noun phrase that is directly in succession.
 
-5) ***Simon
+5) Changing definite articles ('the') after a comma to 'which': In English, we can often describe a noun after we have mentioned it by following that noun with a subordinate clause with the structure ', which… '. For example, '… the school, which ends late'. However, in German, there is not a separate word that is used in the same way as 'which' in our aforementioned English usage. Instead, German uses definite articles that correspond to the gender and plurality of the word that is described, for example (in our fourth line): 'die Hauptschule, die nach dem neunten oder zehnten Schuljahr… endet' (word-by-word translation: 'the school, the after the ninth or tenth school year ends'). Since German only uses commas for subordinate clauses, we can be sure that a definite article after a comma is supposed to mean 'which', so our fifth rule addresses this by looking for a definite article preceded by a comma and replacing the 'the' in the translated text with 'which'.
 
-6) ***Simon related to 4
+6) Moving the modal's verb to after the modal: In all languages, modals express the mood of a verb. In German, another characteristic of modals is that they send the verb whose mood they are describing (call this the 'moody verb') to the end of the sentence. Where as we would say, 'I can do it', where 'can' is the modal, German would say 'I can it do'. While the object of the sentence in this case is 'it' and is fairly short, the rule of sending the 'moody verb' to the end of the sentence still applies. As such, we look for modals in a sentence and if one exists, we look for the verb at the end of the sentence and bring it to after the modal. Consider the example in our case
+***Simon related to 4
+***Simon Notes:
+Line #6 is messed up because 'go' is before 'must'
+Line #15 is messed up because the 'not' isn't carried back over
 
 7) ***Simon
-
 mention merged with 6 second half moving verb at end when no modal (implicitly swapping VBN)
 
 Swapping consecutive past participles: In German, if there is a sentence with multiple past participles in the past perfect tense, their orders are swapped. For example, consider the sentence in our text: 'Vor kurzem ist die Zeit auf dem Gymnasium von neun auf acht Jahre reduziert worden', which in a word-by-word translation translates to 'Before recently, is the time on high school reduced been', when it should translate to 'Recently, the time in high school has been reduced from nine years to eight years'. While there are various problems in this translation, one obvious problem is that the order of 'reduziert' (reduced) and 'worden' (been) is 'reduziert worden' (reduced been). In order to correct for this, we swap any two consecutive past participles because in German, the main past participle is always after the subordinate past participle.
@@ -138,7 +146,7 @@ Swapping consecutive past participles: In German, if there is a sentence with mu
 
 Our rule that to fix this was to replace any 'the' in our post-word-by-word translation with 'of the'. As an example, consider 'Ein Teil der Schüler und Schülerinnen', which means 'a part of the male pupils and female pupils' where 'der' should translate to 'of the'. However, our word-by-word translation translates this sentence to 'a part the pupil and female pupils'. Since it doesn't make sense to have just the definite article 'the' between two nouns, we change the meaning to be 'of the'.
 
-11) ***Simon
+11) Fixing 'a' and 'an's: One interesting feature of English is that if a word is preceded by an indefinite article (e.g. 'a'), then the form of the indefinite article depends on whether the word begins with a vowel or not. Consider the sentence 'a hard part of the test'. Since the word 'hard' starts with a consonant, we use the indefinite article 'a' before it. However, if we were to change the word 'hard' to 'easy' then we would use the indefinite article 'an' and the sentence would become 'an easy part of test'. This extra fix will make all the indefinite articles agree with the word succeeding them.
 
 For each rule you create, a description of what it was supposed to do, what differences between Language F and English it was supposed to fix. Make sure you give a good example of the use of the rules in your running of your code.
 

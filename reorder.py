@@ -183,79 +183,79 @@ for sentence in sentences:
 		
 		vbEnd = findVerbAtEnd(sentence)
 
-	#Rule 8 - abbreviated match verb with preposition
-	for i in range(len(sentence)):
-		if posDict[sentence[i]] in verbs:
-			ind = i + 1
-			while ind < len(sentence):
-				if posDict[sentence[ind]] == 'IN':
-					root = sentence[i]
-					roots = [root]
-					if root.endswith('es') or root.endswith('ed'):
-						roots.append(root[:-2])
-					if root.endswith('s') or root.endswith('d'):
-						roots.append(root[:-1])
+	# #Rule 8 - abbreviated match verb with preposition
+	# for i in range(len(sentence)):
+	# 	if posDict[sentence[i]] in verbs:
+	# 		ind = i + 1
+	# 		while ind < len(sentence):
+	# 			if posDict[sentence[ind]] == 'IN':
+	# 				root = sentence[i]
+	# 				roots = [root]
+	# 				if root.endswith('es') or root.endswith('ed'):
+	# 					roots.append(root[:-2])
+	# 				if root.endswith('s') or root.endswith('d'):
+	# 					roots.append(root[:-1])
 
-					for r in roots:
-						if r in vpDict:
-							sentence[ind] = vpDict[r]
-							posDict[vpDict[r]] = 'IN'
-					break
-				ind += 1
+	# 				for r in roots:
+	# 					if r in vpDict:
+	# 						sentence[ind] = vpDict[r]
+	# 						posDict[vpDict[r]] = 'IN'
+	# 				break
+	# 			ind += 1
 	
-	#Rule 9 - fix VBN (change are or it before to has / have)
-	for i in range(len(sentence)):
-                if posDict[sentence[i]] == 'VBN':
-			if sentence[i - 1] == 'is':
-				sentence[i - 1] = 'has'
-				posDict['has'] = ''
-			elif sentence[i - 1] == 'are':
-				sentence[i - 1] = 'have'
-				posDit['have'] = ''
+	# #Rule 9 - fix VBN (change are or it before to has / have)
+	# for i in range(len(sentence)):
+ #                if posDict[sentence[i]] == 'VBN':
+	# 		if sentence[i - 1] == 'is':
+	# 			sentence[i - 1] = 'has'
+	# 			posDict['has'] = ''
+	# 		elif sentence[i - 1] == 'are':
+	# 			sentence[i - 1] = 'have'
+	# 			posDit['have'] = ''
 			
-	# Rule 9 - fixed genitive tense in lines 
-	# #4 ('a part the pupils' -> 'a part of the pupils'), 
-	# #8 ('an other part the pupils' -> '... an other part of the pupils'), 
-	# #10 ('... the termination the middle maturation' -> '... the termination of the middle maturation')
-	indicesToAddOf = []
+	# # Rule 9 - fixed genitive tense in lines 
+	# # #4 ('a part the pupils' -> 'a part of the pupils'), 
+	# # #8 ('an other part the pupils' -> '... an other part of the pupils'), 
+	# # #10 ('... the termination the middle maturation' -> '... the termination of the middle maturation')
+	# indicesToAddOf = []
 
-	subPos = None
-	if posDict[sentence[0]] == "IN": #preposition
-		#Find subject of prepositional phrase
-		for i in range(1,len(sentence)):
-			if posDict[sentence[i]] in nouns:
-				subPos = i
-				break
+	# subPos = None
+	# if posDict[sentence[0]] == "IN": #preposition
+	# 	#Find subject of prepositional phrase
+	# 	for i in range(1,len(sentence)):
+	# 		if posDict[sentence[i]] in nouns:
+	# 			subPos = i
+	# 			break
 		
-	#Find the beginning index of the next subject
-	if subPos == None:
-		beginIndex = 0
-	else:
-		beginIndex = subPos+1
+	# #Find the beginning index of the next subject
+	# if subPos == None:
+	# 	beginIndex = 0
+	# else:
+	# 	beginIndex = subPos+1
 
-	# print "looking at range %d and %d" %(beginIndex, len(sentence)-1)
-	for i in range(beginIndex, len(sentence) - 1):
-		if posDict[sentence[i]] in nouns:
-			# print "noun is %s and next word is %s and pos is %s" %(sentence[i], sentence[i+1], posDict[sentence[i+1]])
-			if posDict[sentence[i+1]] == "DT" and sentence[i] != "itself":
-				# print "looking at sentence:"
-				# print sentence
-				# print "****added %d****" %(i+1)
-				indicesToAddOf.append(i+1)
+	# # print "looking at range %d and %d" %(beginIndex, len(sentence)-1)
+	# for i in range(beginIndex, len(sentence) - 1):
+	# 	if posDict[sentence[i]] in nouns:
+	# 		# print "noun is %s and next word is %s and pos is %s" %(sentence[i], sentence[i+1], posDict[sentence[i+1]])
+	# 		if posDict[sentence[i+1]] == "DT" and sentence[i] != "itself":
+	# 			# print "looking at sentence:"
+	# 			# print sentence
+	# 			# print "****added %d****" %(i+1)
+	# 			indicesToAddOf.append(i+1)
 
-	for index in indicesToAddOf:
-		sentence.insert(index, 'of')
-		for indexPos in range(len(indicesToAddOf)):
-			indicesToAddOf[indexPos] += 1
+	# for index in indicesToAddOf:
+	# 	sentence.insert(index, 'of')
+	# 	for indexPos in range(len(indicesToAddOf)):
+	# 		indicesToAddOf[indexPos] += 1
 
 
 
-	#Rule 11 - fix a and an
-	for i in range(len(sentence) - 1):
-                if sentence[i] == 'a' and sentence[i + 1][0] in vowels:
-                        sentence[i] = 'an'
-		elif sentence[i] == 'an' and sentence[i + 1][0] not in vowels:
-			sentence[i] = 'a'
+	# #Rule 11 - fix a and an
+	# for i in range(len(sentence) - 1):
+ #                if sentence[i] == 'a' and sentence[i + 1][0] in vowels:
+ #                        sentence[i] = 'an'
+	# 	elif sentence[i] == 'an' and sentence[i + 1][0] not in vowels:
+	# 		sentence[i] = 'a'
 
 	# Post processing, capitalize first letter, add period at end.
 	sentence[0] = sentence[0].capitalize()
