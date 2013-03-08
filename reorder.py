@@ -45,7 +45,9 @@ def findNounPhrase(sentence, index):
 
 sentences = readFile('translated.txt')
 tagged = readFile('translated-tagged.txt')
+vp = readFile('verb-prepositions.txt')
 posDict = {}
+vpDict = {}
 
 # Create dict of words and their POS tag
 for line in tagged:
@@ -59,7 +61,11 @@ for line in tagged:
 		else:
 			posDict[tags[0]] = tags[1]
 
-nouns = set(['NN','NNP','NNPS','NNS'])
+for line in vp:
+	l = string.split(line.strip(), ' ')
+	vpDict[l[0]] = l[1]
+
+nouns = set(['NN','NNP','NNPS','NNS','PRP'])
 verbs = set(['VB','VBD','VBG','VBN','VBP','VBZ'])
 adverbs = set(['RB','RBR','RBS'])
 adjectives = set(['JJ', 'JJR', 'JJS'])
@@ -126,20 +132,31 @@ for sentence in sentences:
 			posDict['which'] = 'WDT'
 			sentence.insert(i + 2, sentence.pop(-2))
 
-	#Rule 6 - make sure subject and verb agree
-	# for i in range(len(sentence) - 1):
-	# 	if sentence[i] == 
+	#Rule 6 - abbreviated match verb with preposition
+	for i in range(len(sentence)):
+		if posDict[sentence[i]] in verbs:
+			ind = i + 1
+			while ind < len(sentence):
+				if posDict[sentence[ind]] == 'IN':
+					root = sentence[i]
+					roots = [root]
+					if root.endswith('es') or root.endswith('ed'):
+						roots.append(root[:-2])
+					if root.endswith('s') or root.endswith('d'):
+						roots.append(root[:-1])
+
+					for r in roots:
+						if r in vpDict:
+							sentence[ind] = vpDict[r]
+							posDict[vpDict[r]] = 'IN'
+					break
+				ind += 1
 	
 	#Rule 7 - swap consec VBN
 	for i in range(len(sentence) - 1):
                 if posDict[sentence[i]] == 'VBN' and posDict[sentence[i + 1]] == 'VBN':
-			# print i
-			# print len(sentence)
-			# print sentence[i]
-			# print sentence[i + 1]
                         sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
 			
-
 	# Rule 9 - fixed genitive tense in lines 
 	# #4 ('a part the pupils' -> 'a part of the pupils'), 
 	# #8 ('an other part the pupils' -> '... an other part of the pupils'), 
@@ -176,9 +193,7 @@ for sentence in sentences:
 			indicesToAddOf[indexPos] += 1
 
 
-
-
-	#Rule 10
+	#Rule 11 - fix a and an
 	for i in range(len(sentence) - 1):
                 if sentence[i] == 'a' and sentence[i + 1][0] in vowels:
                         sentence[i] = 'an'

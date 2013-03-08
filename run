@@ -1,2 +1,3 @@
 python translate.py > translated.txt
 java -mx300m -classpath stanford-postagger-2012-11-11/stanford-postagger.jar edu.stanford.nlp.tagger.maxent.MaxentTagger -model stanford-postagger-2012-11-11/models/english-left3words-distsim.tagger -textFile translated.txt > translated-tagged.txt
+python reorder.py > final_translated.txt
