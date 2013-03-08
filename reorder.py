@@ -140,7 +140,7 @@ for sentence in sentences:
                         sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
 			
 
-	# Rule 8 - fixed genitive tense in lines 
+	# Rule 9 - fixed genitive tense in lines 
 	# #4 ('a part the pupils' -> 'a part of the pupils'), 
 	# #8 ('an other part the pupils' -> '... an other part of the pupils'), 
 	# #9 ('... the termination the middle maturation' -> '... the termination of the middle maturation')
