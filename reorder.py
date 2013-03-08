@@ -78,14 +78,14 @@ transform = []
 for sentence in sentences:
 	sentence = sentence.strip().split(' ')
 
-	#Rule 8 - replace 'are it' -> 'there exists'
+	#Rule 1 - replace 'are it' -> 'there exists'
 	for i in range(len(sentence) - 1):
 		if ((sentence[i] == 'are' and sentence[i + 1] == 'it') or
 		   (sentence[i] == 'it' and sentence[i + 1] == 'are')):
 			sentence[i], sentence[i + 1] = 'there', 'is'
 
 			
-	# Rule 1 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front of the verb
+	# Rule 2 - first sentence - if the sentence begins a prepositional phrase, then find the subject and move it to the front of the verb
 	if posDict[sentence[0]] == "IN": #preposition
 		#Find subject of prepositional phrase
 		subPos = None
@@ -102,12 +102,12 @@ for sentence in sentences:
 				subPos += 1
 				sentence.insert(subPos, sentence.pop(i))
 	
-	# Rule 2 - swap verb and pronoun after it
+	# Rule 3 - swap verb and pronoun after it
 	for i in range(len(sentence) - 1):
 		if posDict[sentence[i]] in verbs and posDict[sentence[i + 1]] == "PRP":
 			sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
 		
-	#Rule 3 - swap modal and nouns/prp
+	#Rule 4 - swap modal and nouns/prp
 	for i in range(len(sentence)):
 		if posDict[sentence[i]] == 'MD':
 			(subStart, subEnd) = findNounPhrase(sentence, i + 1)
@@ -115,7 +115,7 @@ for sentence in sentences:
 				sentence.insert(subEnd, sentence.pop(i))
 				break
 			
-	#Rule 4 - move verb at end of sentence after modal
+	#Rule 5 - move verb at end of sentence after modal
 	if posDict[sentence[-2]] in verbs:
 		for i in range(len(sentence)):
 			if posDict[sentence[i]] == 'MD':
@@ -125,14 +125,14 @@ for sentence in sentences:
 				sentence.insert(ind, sentence.pop(-2))
 				
 
-	#Rule 5 - change the after comma to which, move verb at end after comma
+	#Rule 6 - change the after comma to which, move verb at end after comma
 	for i in range(len(sentence) - 1):
 		if sentence[i] == ',' and sentence[i + 1] == 'the':
 			sentence[i + 1] = 'which'
 			posDict['which'] = 'WDT'
 			sentence.insert(i + 2, sentence.pop(-2))
 
-	#Rule 6 - abbreviated match verb with preposition
+	#Rule 7 - abbreviated match verb with preposition
 	for i in range(len(sentence)):
 		if posDict[sentence[i]] in verbs:
 			ind = i + 1
@@ -152,7 +152,7 @@ for sentence in sentences:
 					break
 				ind += 1
 	
-	#Rule 7 - swap consec VBN
+	#Rule 8 - swap consec VBN
 	for i in range(len(sentence) - 1):
                 if posDict[sentence[i]] == 'VBN' and posDict[sentence[i + 1]] == 'VBN':
                         sentence[i], sentence[i + 1] = sentence[i + 1], sentence[i]
