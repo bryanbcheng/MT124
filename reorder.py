@@ -164,26 +164,23 @@ for sentence in sentences:
 
 	#Rule 6/7 - move verb at end of sentence after modal or if no modal, is or are
 	vbEnd = findVerbAtEnd(sentence)
-	consecShifts = 0 # if verb belongs at end
-        while vbEnd != 0 and consecShifts < 3:
-		modalFound = False
+        if vbEnd != 0:
                 for i in range(vbEnd - 1, -len(sentence), -1):
 			if posDict[sentence[i]] == 'MD':
-				modalFound = True
                                 ind = i + 1
                                 while posDict[sentence[ind]] in adverbs:
                                         ind += 1
                                 sentence.insert(ind + 1, sentence.pop(vbEnd))
 				break
 
-		if not modalFound:
-			for i in range(len(sentence) + vbEnd + 1):
-				if sentence[i] == 'is' or sentence[i] == 'are':
-					sentence.insert(i + 1, sentence.pop(vbEnd))
-					break
+	vbEnd = findVerbAtEnd(sentence)
+	while vbEnd != 0 and posDict[sentence[vbEnd]] == 'VBN':
+		for i in range(len(sentence) + vbEnd + 1):
+			if sentence[i] == 'is' or sentence[i] == 'are':
+				sentence.insert(i + 1, sentence.pop(vbEnd))
+				break
 		
 		vbEnd = findVerbAtEnd(sentence)
-		consecShifts += 1
 
 	#Rule 8 - abbreviated match verb with preposition
 	for i in range(len(sentence)):
